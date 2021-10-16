@@ -7,6 +7,7 @@ import org.mad.birdwatching.models.BirdModel
 private val logger = KotlinLogging.logger {}
 
 val birds = ArrayList<BirdModel>()
+//val controller = BirdController.kt()
 
 fun main(args: Array<String>) {
     logger.info { "Launching Bird Console App" }
