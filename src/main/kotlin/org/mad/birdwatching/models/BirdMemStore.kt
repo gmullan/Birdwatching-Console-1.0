@@ -1,6 +1,8 @@
 package org.mad.birdwatching.models
 
 import mu.KotlinLogging
+import org.mad.birdwatching.models.BirdModel
+import org.mad.birdwatching.models.BirdStore
 
 private val logger = KotlinLogging.logger {}
 var lastId = 0L
@@ -34,6 +36,10 @@ class BirdMemStore : BirdStore {
             foundBird.title = bird.title
             foundBird.description = bird.description
         }
+    }
+
+    override fun delete(bird: BirdModel) {
+        birds.remove(bird)
     }
 
     internal fun logAll() {

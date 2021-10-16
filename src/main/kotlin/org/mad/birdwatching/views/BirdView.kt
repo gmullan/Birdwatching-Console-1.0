@@ -1,6 +1,6 @@
 package org.wit.bird.console.views
 
-import org.mad.birdwatching.models.BirdMemStore
+import org.mad.birdwatching.models.BirdJSONStore
 import org.mad.birdwatching.models.BirdModel
 //import org.mad.birdwatching.views.BirdView
 //import org.wit.bird.main.birds
@@ -17,7 +17,7 @@ class BirdView {
         println(" 1. Add Bird")
         println(" 2. Update Bird")
         println(" 3. List All Birds")
-        println(" 4. Search Birds")
+        println(" 5. Delete Birds")
         println("-1. Exit")
         println()
         print("Enter Option : ")
@@ -29,7 +29,7 @@ class BirdView {
         return option
     }
 
-    fun listBird(birds : BirdMemStore) {
+    fun listBird(birds: BirdJSONStore) {
         println("List All Birds")
         println()
         birds.logAll()
@@ -84,5 +84,5 @@ class BirdView {
         else
             -9
         return searchId
-    }
-}
+    }}
+

@@ -5,4 +5,5 @@ interface BirdStore {
     fun findOne(id: Long): BirdModel?
     fun create(bird: BirdModel)
     fun update(bird: BirdModel)
+    fun delete(bird: BirdModel)
 }

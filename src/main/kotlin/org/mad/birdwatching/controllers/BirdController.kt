@@ -1,14 +1,15 @@
 package org.wit.birdwatching.controllers
 
 import mu.KotlinLogging
-import org.mad.birdwatching.models.BirdMemStore
+import org.mad.birdwatching.models.BirdJSONStore
 import org.mad.birdwatching.models.BirdModel
 import org.wit.bird.console.views.BirdView
 
 
 class BirdController {
 
-    val birds = BirdMemStore()
+ //   val birds = BirdMemStore()
+    val birds = BirdJSONStore()
     val birdView = BirdView()
     val logger = KotlinLogging.logger {}
 
@@ -27,6 +28,7 @@ class BirdController {
                 2 -> update()
                 3 -> list()
                 4 -> search()
+                5 -> delete()
                 -99 -> dummyData()
                 -1 -> println("Exiting App")
                 else -> println("Invalid Option")
@@ -71,6 +73,20 @@ class BirdController {
         }
         else
             println("Bird Not Updated...")
+    }
+
+    fun delete(){
+        birdView.listBird(birds)
+        var searchId = birdView.getId()
+        val aBird = search(searchId)
+
+        if(aBird != null) {
+            birds.delete(aBird)
+            println("Bird Deleted...")
+            birdView.listBird(birds)
+        }
+        else
+            println("Bird Not Deleted...")
     }
 
     fun search() {
