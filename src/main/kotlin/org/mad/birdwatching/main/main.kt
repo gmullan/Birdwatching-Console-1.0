@@ -1,33 +1,33 @@
 package org.mad.birdwatching.main
 
 import mu.KotlinLogging
-import org.mad.birdwatching.models.PlacemarkModel
+import org.mad.birdwatching.models.BirdModel
 
 
 private val logger = KotlinLogging.logger {}
 
-val placemarks = ArrayList<PlacemarkModel>()
+val birds = ArrayList<BirdModel>()
 
 fun main(args: Array<String>) {
-    logger.info { "Launching Placemark Console App" }
-    println("Placemark Kotlin App Version 1.0")
+    logger.info { "Launching Bird Console App" }
+    println("Bird Kotlin App Version 1.0")
 
     var input: Int
 
     do {
         input = menu()
         when(input) {
-            1 -> addPlacemark()
-            2 -> updatePlacemark()
-            3 -> listPlacemarks()
-            4 -> searchPlacemark()
+            1 -> addBird()
+            2 -> updateBird()
+            3 -> listBirds()
+            4 -> searchBird()
             -99 -> dummyData()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }
         println()
     } while (input != -1)
-    logger.info { "Shutting Down Placemark Console App" }
+    logger.info { "Shutting Down Bird Console App" }
 }
 
 fun menu() : Int {
@@ -36,10 +36,10 @@ fun menu() : Int {
     var input: String?
 
     println("MAIN MENU")
-    println(" 1. Add Placemark")
-    println(" 2. Update Placemark")
-    println(" 3. List All Placemarks")
-    println(" 4. Search Placemarks")
+    println(" 1. Add Bird")
+    println(" 2. Update Bird")
+    println(" 3. List All Bird")
+    println(" 4. Search Bird")
     println("-1. Exit")
     println()
     print("Enter Option : ")
@@ -51,70 +51,81 @@ fun menu() : Int {
     return option
 }
 
-fun addPlacemark(){
-    var aPlacemark = PlacemarkModel()
-    println("Add Placemark")
+fun addBird(){
+    var aBird = BirdModel()
+    println("Add Bird")
     println()
     print("Enter a Title : ")
-    aPlacemark.title = readLine()!!
+    aBird.title = readLine()!!
     print("Enter a Description : ")
-    aPlacemark.description = readLine()!!
+    aBird.description = readLine()!!
 
-    if (aPlacemark.title.isNotEmpty() && aPlacemark.description.isNotEmpty()) {
-        aPlacemark.id = placemarks.size.toLong()
-        placemarks.add(aPlacemark.copy())
-        logger.info("Placemark Added : [ $aPlacemark ]")
+    if (aBird.title.isNotEmpty() && aBird.description.isNotEmpty()) {
+        aBird.id = birds.size.toLong()
+        birds.add(aBird.copy())
+        logger.info("Bird Added : [ $aBird ]")
     }
     else
-        logger.info("Placemark Not Added")
+        logger.info("Bird Not Added")
 }
 
-fun updatePlacemark() {
-    println("Update Placemark")
+fun updateBird() {
+    println("Update Bird")
     println()
-    listPlacemarks()
+    listBirds()
     var searchId = getId()
-    val aPlacemark = search(searchId)
+    val aBird = search(searchId)
     var tempTitle : String?
     var tempDescription : String?
 
-    if(aPlacemark != null) {
-        print("Enter a new Title for [ " + aPlacemark.title + " ] : ")
+//Area I edited because addBird().title was throwing an error > changed to aBird.title
+    if(addBird() != null) {
+        if (aBird != null) {
+            print("Enter a new Title for [ " + aBird.title + " ] : ")
+        }
         tempTitle = readLine()!!
-        print("Enter a new Description for [ " + aPlacemark.description + " ] : ")
+        if (aBird != null) {
+            print("Enter a new Description for [ " + aBird.description + " ] : ")
+        }
         tempDescription = readLine()!!
 
         if (!tempTitle.isNullOrEmpty() && !tempDescription.isNullOrEmpty()) {
-            aPlacemark.title = tempTitle
-            aPlacemark.description = tempDescription
-            println(
-                "You updated [ " + aPlacemark.title + " ] for title " +
-                        "and [ " + aPlacemark.description + " ] for description")
-            logger.info("Placemark Updated : [ $aPlacemark ]")
+            if (aBird != null) {
+                aBird.title = tempTitle
+            }
+            if (aBird != null) {
+                aBird.description = tempDescription
+            }
+            if (aBird != null) {
+                println(
+                    "You updated [ " + aBird.title + " ] for title " +
+                            "and [ " + aBird.description + " ] for description")
+            }
+            logger.info("Bird Updated : [ $aBird ]")
         }
         else
-            logger.info("Placemark Not Updated")
+            logger.info("Bird Not Updated")
     }
     else
-        println("Placemark Not Updated...")
+        println("Bird Not Updated...")
 }
 
-fun listPlacemarks() {
-    println("List All Placemarks")
+fun listBirds() {
+    println("List All Birds")
     println()
-    placemarks.forEach { logger.info("${it}") }
+    birds.forEach { logger.info("${it}") }
     println()
 }
 
-fun searchPlacemark() {
+fun searchBird() {
 
     var searchId = getId()
-    val aPlacemark = search(searchId)
+    val aBird = search(searchId)
 
-    if(aPlacemark != null)
-        println("Placemark Details [ $aPlacemark ]")
+    if(aBird != null)
+        println("Bird Details [ $aBird ]")
     else
-        println("Placemark Not Found...")
+        println("Bird Not Found...")
 }
 
 fun getId() : Long {
@@ -129,13 +140,13 @@ fun getId() : Long {
     return searchId
 }
 
-fun search(id: Long) : PlacemarkModel? {
-    var foundPlacemark: PlacemarkModel? = placemarks.find { p -> p.id == id }
-    return foundPlacemark
+fun search(id: Long) : BirdModel? {
+    var foundBird: BirdModel? = birds.find { p -> p.id == id }
+    return foundBird
 }
 
 fun dummyData() {
-    placemarks.add(PlacemarkModel(1, "New York New York", "So Good They Named It Twice"))
-    placemarks.add(PlacemarkModel(2, "Ring of Kerry", "Some place in the Kingdom"))
-    placemarks.add(PlacemarkModel(3, "Waterford City", "You get great Blaas Here!!"))
+    birds.add(BirdModel(1, "New York New York", "So Good They Named It Twice"))
+    birds.add(BirdModel(2, "Ring of Kerry", "Some place in the Kingdom"))
+    birds.add(BirdModel(3, "Waterford City", "You get great Blaas Here!!"))
 }
